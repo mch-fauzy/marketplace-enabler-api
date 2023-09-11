@@ -1,0 +1,8 @@
+evm_cli_version: 0.0.40
+internal_tools:
+    grafana-internal: Grafana
+    verdaccio: NPM Verdaccio
+notif_publisher_url: http://evm-notif-publisher.prod.internal
+password: ""
+reliev_base_url: http://reliev.prod.internal
+username: ""

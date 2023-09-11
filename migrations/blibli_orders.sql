@@ -1,0 +1,21 @@
+CREATE TABLE evermpe.blibli_orders (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    brand VARCHAR(255),
+    store VARCHAR(255),
+    order_no VARCHAR(255),
+    order_status VARCHAR(255),
+    sku_code VARCHAR(255),
+    total_quantity INT,
+    product_price INT,
+    order_date DATETIME,
+    name_product VARCHAR(255),
+    order_item_no VARCHAR(255),
+    buyer_name VARCHAR(255),
+    packet_no VARCHAR(255),
+    awb_no VARCHAR(255),
+    pickup_point_code VARCHAR(255),
+    created_at DATETIME,
+    updated_at DATETIME,
+    created_by VARCHAR(255),
+    updated_by VARCHAR(255)
+);
