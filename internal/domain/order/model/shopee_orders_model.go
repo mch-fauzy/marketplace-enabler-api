@@ -22,3 +22,15 @@ func ShopeeNewOrdersDownloadList(shopeeDownloadList ShopeeDownloadList) OrdersDo
 		Shopee: shopeeDownloadList,
 	}
 }
+
+type ShopeeBrand struct {
+	Brand null.String `db:"brand"`
+}
+
+type ShopeeBrandList []*ShopeeBrand
+
+func ShopeeNewOrdersBrandList(shopeeBrandList ShopeeBrandList) OrdersBrandList {
+	return OrdersBrandList{
+		Shopee: shopeeBrandList,
+	}
+}
