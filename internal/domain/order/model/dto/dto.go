@@ -18,10 +18,12 @@ func ConvertDownloadResponses(ordersDownloadList model.OrdersDownloadList) Order
 
 type OrdersBrandResponseList struct {
 	Blibli BlibliBrandResponseList `json:"blibli"`
+	Shopee ShopeeBrandResponseList `json:"shopee"`
 }
 
 func ConvertBrandResponses(ordersBrandList model.OrdersBrandList) OrdersBrandResponseList {
 	return OrdersBrandResponseList{
 		Blibli: convertBlibliBrandResponses(ordersBrandList),
+		Shopee: convertShopeeBrandResponses(ordersBrandList),
 	}
 }

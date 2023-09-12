@@ -47,3 +47,27 @@ func convertShopeeDownloadResponses(ordersDownloadList model.OrdersDownloadList)
 
 	return shopeeDownloadResponseList
 }
+
+type ShopeeBrandResponse struct {
+	Brand null.String `json:"brand"`
+}
+
+func mapShopeeBrandResponses(shopeeBrand model.ShopeeBrand) ShopeeBrandResponse {
+	return ShopeeBrandResponse{
+		Brand: shopeeBrand.Brand,
+	}
+}
+
+type ShopeeBrandResponseList []*ShopeeBrandResponse
+
+func convertShopeeBrandResponses(ordersBrandList model.OrdersBrandList) ShopeeBrandResponseList {
+	var shopeeBrandResponseList ShopeeBrandResponseList = ShopeeBrandResponseList{}
+
+	if len(ordersBrandList.Shopee) > 0 {
+		for _, shopeeBrand := range ordersBrandList.Shopee {
+			shopeeBrandResponse := mapShopeeBrandResponses(*shopeeBrand)
+			shopeeBrandResponseList = append(shopeeBrandResponseList, &shopeeBrandResponse)
+		}
+	}
+	return shopeeBrandResponseList
+}
