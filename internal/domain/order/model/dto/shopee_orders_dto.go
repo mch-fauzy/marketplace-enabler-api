@@ -52,6 +52,7 @@ type ShopeeBrandResponse struct {
 	Brand null.String `json:"brand"`
 }
 
+// Shopee brand dto mapper
 func mapShopeeBrandResponses(shopeeBrand model.ShopeeBrand) ShopeeBrandResponse {
 	return ShopeeBrandResponse{
 		Brand: shopeeBrand.Brand,
@@ -60,6 +61,7 @@ func mapShopeeBrandResponses(shopeeBrand model.ShopeeBrand) ShopeeBrandResponse 
 
 type ShopeeBrandResponseList []*ShopeeBrandResponse
 
+// Shopee brand dto converter
 func convertShopeeBrandResponses(ordersBrandList model.OrdersBrandList) ShopeeBrandResponseList {
 	var shopeeBrandResponseList ShopeeBrandResponseList = ShopeeBrandResponseList{}
 

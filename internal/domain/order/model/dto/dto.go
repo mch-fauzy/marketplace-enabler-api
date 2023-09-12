@@ -9,6 +9,7 @@ type OrdersDownloadResponseList struct {
 	Shopee ShopeeDownloadResponseList `json:"shopee"`
 }
 
+// Public download dto converter for every marketplace
 func ConvertDownloadResponses(ordersDownloadList model.OrdersDownloadList) OrdersDownloadResponseList {
 	return OrdersDownloadResponseList{
 		Blibli: convertBlibliDownloadResponses(ordersDownloadList),
@@ -21,6 +22,7 @@ type OrdersBrandResponseList struct {
 	Shopee ShopeeBrandResponseList `json:"shopee"`
 }
 
+// Public brand dto converter for every marketplace
 func ConvertBrandResponses(ordersBrandList model.OrdersBrandList) OrdersBrandResponseList {
 	return OrdersBrandResponseList{
 		Blibli: convertBlibliBrandResponses(ordersBrandList),

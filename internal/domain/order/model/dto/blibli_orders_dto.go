@@ -49,6 +49,7 @@ type BlibliBrandResponse struct {
 	Brand null.String `json:"brand"`
 }
 
+// Blibli brand dto mapper
 func mapBlibliBrandResponses(blibliBrand model.BlibliBrand) BlibliBrandResponse {
 	return BlibliBrandResponse{
 		Brand: blibliBrand.Brand,
@@ -57,6 +58,7 @@ func mapBlibliBrandResponses(blibliBrand model.BlibliBrand) BlibliBrandResponse 
 
 type BlibliBrandResponseList []*BlibliBrandResponse
 
+// Blibli brand dto converter
 func convertBlibliBrandResponses(ordersBrandList model.OrdersBrandList) BlibliBrandResponseList {
 	var blibliBrandResponseList BlibliBrandResponseList = BlibliBrandResponseList{}
 
