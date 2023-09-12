@@ -51,6 +51,8 @@ func (s *OrderServiceImpl) GetBrandsByMarket(brandCtx context.Context, brandFilt
 	var err error
 
 	switch brandFilter.Marketplace {
+	case shared.SHOPEE:
+		brandResults, err = s.OrderRepository.GetShopeeBrands(brandCtx)
 	case shared.BLIBLI:
 		brandResults, err = s.OrderRepository.GetBlibliBrands(brandCtx)
 	default:
