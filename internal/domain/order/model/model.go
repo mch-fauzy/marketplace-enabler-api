@@ -7,4 +7,5 @@ type OrdersDownloadList struct {
 
 type OrdersBrandList struct {
 	Blibli BlibliBrandList
+	Shopee ShopeeBrandList
 }
