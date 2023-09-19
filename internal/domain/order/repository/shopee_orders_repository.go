@@ -43,21 +43,21 @@ const (
 )
 
 type ShopeeOrdersRepository interface {
-	DownloadShopeeOrders(ctx context.Context, filter model.DownloadOrdersByMarketFilter) (model.OrdersDownloadList, error)
+	DownloadShopeeOrders(downloadCtx context.Context, downloadFilter model.DownloadOrdersByMarketFilter) (model.OrdersDownloadList, error)
 	GetShopeeBrands(brandCtx context.Context) (model.OrdersBrandList, error)
 }
 
-func (r *OrderRepositoryMySQL) DownloadShopeeOrders(ctx context.Context, filter model.DownloadOrdersByMarketFilter) (model.OrdersDownloadList, error) {
+func (r *OrderRepositoryMySQL) DownloadShopeeOrders(downloadCtx context.Context, downloadFilter model.DownloadOrdersByMarketFilter) (model.OrdersDownloadList, error) {
 	query := fmt.Sprintf(selectShopeeDownload)
 
 	var args []interface{}
 	query += whereShopeeBrandAndStore
-	args = append(args, filter.Brand, filter.Store)
+	args = append(args, downloadFilter.Brand, downloadFilter.Store)
 
 	// (Optional Query) Check if datetime is not equal to 0001-01-01 00:00:00 +0000 UTC or ""
-	if !filter.DateFrom.IsZero() && !filter.DateTo.IsZero() {
+	if !downloadFilter.DateFrom.IsZero() && !downloadFilter.DateTo.IsZero() {
 		query += optionalShopeeDateRange
-		args = append(args, filter.DateFrom, filter.DateTo)
+		args = append(args, downloadFilter.DateFrom, downloadFilter.DateTo)
 	}
 
 	query += limitShopeeRow

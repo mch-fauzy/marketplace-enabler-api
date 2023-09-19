@@ -63,17 +63,17 @@ func ConvertDownloadOrdersByMarketFilterRequests(downloadOrdersByMarketFilterReq
 	}
 }
 
-type BrandOrdersByMarketFilterRequest struct {
+type GetBrandsByMarketFilterRequest struct {
 	Marketplace string
 }
 
-func (f *BrandOrdersByMarketFilterRequest) Validate() error {
+func (f *GetBrandsByMarketFilterRequest) Validate() error {
 	validator := shared.GetValidator()
 	return validator.Struct(f)
 }
 
-func NewBrandOrdersByMarketFilterRequests(marketplace string) BrandOrdersByMarketFilterRequest {
-	return BrandOrdersByMarketFilterRequest{
+func NewGetBrandsByMarketFilterRequests(marketplace string) GetBrandsByMarketFilterRequest {
+	return GetBrandsByMarketFilterRequest{
 		Marketplace: marketplace,
 	}
 }
