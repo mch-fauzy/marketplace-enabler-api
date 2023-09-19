@@ -13,7 +13,7 @@ import (
 
 type OrderExtensionService interface {
 	DownloadOrdersByMarket(downloadCtx context.Context, downloadFilter dto.DownloadOrdersByMarketFilterRequest) (dto.OrdersDownloadResponseList, error)
-	GetBrandsByMarket(brandCtx context.Context, brandFilter dto.BrandOrdersByMarketFilterRequest) (dto.OrdersBrandResponseList, error)
+	GetBrandsByMarket(brandCtx context.Context, brandFilter dto.GetBrandsByMarketFilterRequest) (dto.OrdersBrandResponseList, error)
 }
 
 func (s *OrderServiceImpl) DownloadOrdersByMarket(downloadCtx context.Context, downloadFilter dto.DownloadOrdersByMarketFilterRequest) (dto.OrdersDownloadResponseList, error) {
@@ -35,7 +35,7 @@ func (s *OrderServiceImpl) DownloadOrdersByMarket(downloadCtx context.Context, d
 			log.Error().
 				Err(err).
 				Msg("[DownloadOrdersByMarket] Internal server error occurred")
-			err = failure.InternalError(err)
+			err = failure.InternalError(shared.InternalErrorSystem)
 			return dto.OrdersDownloadResponseList{}, err
 		}
 		log.Warn().
@@ -46,7 +46,7 @@ func (s *OrderServiceImpl) DownloadOrdersByMarket(downloadCtx context.Context, d
 	return dto.ConvertDownloadResponses(downloadResults), nil
 }
 
-func (s *OrderServiceImpl) GetBrandsByMarket(brandCtx context.Context, brandFilter dto.BrandOrdersByMarketFilterRequest) (dto.OrdersBrandResponseList, error) {
+func (s *OrderServiceImpl) GetBrandsByMarket(brandCtx context.Context, brandFilter dto.GetBrandsByMarketFilterRequest) (dto.OrdersBrandResponseList, error) {
 	var brandResults model.OrdersBrandList
 	var err error
 
@@ -64,7 +64,7 @@ func (s *OrderServiceImpl) GetBrandsByMarket(brandCtx context.Context, brandFilt
 			log.Error().
 				Err(err).
 				Msg("[GetBrandsByMarket] Internal server error occurred")
-			err = failure.InternalError(err)
+			err = failure.InternalError(shared.InternalErrorSystem)
 			return dto.OrdersBrandResponseList{}, err
 		}
 		log.Warn().

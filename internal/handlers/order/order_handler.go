@@ -5,7 +5,6 @@ import (
 
 	"github.com/evermos/boilerplate-go/internal/domain/order/model/dto"
 	"github.com/evermos/boilerplate-go/shared"
-	"github.com/evermos/boilerplate-go/shared/failure"
 	"github.com/evermos/boilerplate-go/transport/http/response"
 	"github.com/go-chi/chi"
 	"github.com/rs/zerolog/log"
@@ -36,7 +35,7 @@ func (h *OrderHandler) DownloadOrdersByMarket(w http.ResponseWriter, r *http.Req
 
 	err := downloadFilter.Validate()
 	if err != nil {
-		response.WithError(w, failure.BadRequest(err))
+		response.WithError(w, err)
 		return
 	}
 
@@ -65,11 +64,11 @@ func (h *OrderHandler) DownloadOrdersByMarket(w http.ResponseWriter, r *http.Req
 // @Router /v1/orders/{market}/brand [get]
 func (h *OrderHandler) GetBrandsByMarket(w http.ResponseWriter, r *http.Request) {
 	marketplace := chi.URLParam(r, shared.MarketPathField)
-	brandFilter := dto.NewBrandOrdersByMarketFilterRequests(marketplace)
+	brandFilter := dto.NewGetBrandsByMarketFilterRequests(marketplace)
 
 	err := brandFilter.Validate()
 	if err != nil {
-		response.WithError(w, failure.BadRequest(err))
+		response.WithError(w, err)
 		return
 	}
 
