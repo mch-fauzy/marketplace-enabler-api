@@ -84,3 +84,36 @@ func (h *OrderHandler) GetBrandsByMarket(w http.ResponseWriter, r *http.Request)
 
 	response.WithJSON(w, http.StatusOK, brand)
 }
+
+// Get list of unique stores by marketplace
+// @Summary Get Stores By Marketplace
+// @Description Get a list of unique stores by marketplace
+// @Tags orders
+// @Produce json
+// @Param market path string true "Market"
+// @Success 200 {object} response.Base(data=dto.OrdersStoreResponseList)
+// @Failure 400 {object} response.Base
+// @Failure 500 {object} response.Base
+// @Router /v1/orders/{market}/store [get]
+func (h *OrderHandler) GetStoresByMarket(w http.ResponseWriter, r *http.Request) {
+	marketplace := chi.URLParam(r, shared.MarketPathField)
+	storeFilter := dto.NewGetStoresByMarketFilterRequests(marketplace)
+
+	err := storeFilter.Validate()
+	if err != nil {
+		response.WithError(w, err)
+		return
+	}
+
+	storeCtx := r.Context()
+	store, err := h.OrderService.GetStoresByMarket(storeCtx, storeFilter)
+	if err != nil {
+		log.Warn().
+			Err(err).
+			Msg("[GetStoresByMarket] Failed to get brands")
+		response.WithError(w, err)
+		return
+	}
+
+	response.WithJSON(w, http.StatusOK, store)
+}

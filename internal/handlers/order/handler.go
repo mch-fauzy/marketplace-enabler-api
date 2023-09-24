@@ -20,5 +20,6 @@ func (h *OrderHandler) Router(r chi.Router) {
 	r.Route("/", func(r chi.Router) {
 		r.Get("/orders/{market}/download", h.DownloadOrdersByMarket)
 		r.Get("/orders/{market}/brand", h.GetBrandsByMarket)
+		r.Get("/orders/{market}/store", h.GetStoresByMarket)
 	})
 }
