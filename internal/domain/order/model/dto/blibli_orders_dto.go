@@ -71,3 +71,27 @@ func convertBlibliBrandResponses(ordersBrandList model.OrdersBrandList) BlibliBr
 
 	return blibliBrandResponseList
 }
+
+type BlibliStoreResponse struct {
+	Store null.String `json:"store"`
+}
+
+func mapBlibliStoreResponses(blibliStore model.BlibliStore) BlibliStoreResponse {
+	return BlibliStoreResponse{
+		Store: blibliStore.Store,
+	}
+}
+
+type BlibliStoreResponseList []*BlibliStoreResponse
+
+func convertBlibliStoreResponses(ordersStoreList model.OrdersStoreList) BlibliStoreResponseList {
+	var blibliStoreResponseList BlibliStoreResponseList = BlibliStoreResponseList{}
+
+	if len(ordersStoreList.Blibli) > 0 {
+		for _, blibliStore := range ordersStoreList.Blibli {
+			blibliStoreResponse := mapBlibliStoreResponses(*blibliStore)
+			blibliStoreResponseList = append(blibliStoreResponseList, &blibliStoreResponse)
+		}
+	}
+	return blibliStoreResponseList
+}

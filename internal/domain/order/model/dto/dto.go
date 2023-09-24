@@ -29,3 +29,13 @@ func ConvertBrandResponses(ordersBrandList model.OrdersBrandList) OrdersBrandRes
 		Shopee: convertShopeeBrandResponses(ordersBrandList),
 	}
 }
+
+type OrdersStoreResponseList struct {
+	Blibli BlibliStoreResponseList `json:"blibli"`
+}
+
+func ConvertStoreResponses(ordersStoreList model.OrdersStoreList) OrdersStoreResponseList {
+	return OrdersStoreResponseList{
+		Blibli: convertBlibliStoreResponses(ordersStoreList),
+	}
+}
