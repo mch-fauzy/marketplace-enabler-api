@@ -77,3 +77,18 @@ func NewGetBrandsByMarketFilterRequests(marketplace string) GetBrandsByMarketFil
 		Marketplace: marketplace,
 	}
 }
+
+type GetStoresByMarketFilterRequest struct {
+	Marketplace string
+}
+
+func (f *GetStoresByMarketFilterRequest) Validate() error {
+	validator := shared.GetValidator()
+	return validator.Struct(f)
+}
+
+func NewGetStoresByMarketFilterRequests(marketplace string) GetStoresByMarketFilterRequest {
+	return GetStoresByMarketFilterRequest{
+		Marketplace: marketplace,
+	}
+}
