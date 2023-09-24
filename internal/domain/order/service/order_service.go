@@ -14,6 +14,7 @@ import (
 type OrderExtensionService interface {
 	DownloadOrdersByMarket(downloadCtx context.Context, downloadFilter dto.DownloadOrdersByMarketFilterRequest) (dto.OrdersDownloadResponseList, error)
 	GetBrandsByMarket(brandCtx context.Context, brandFilter dto.GetBrandsByMarketFilterRequest) (dto.OrdersBrandResponseList, error)
+	GetStoresByMarket(storeCtx context.Context, storeFilter dto.GetStoresByMarketFilterRequest) (dto.OrdersStoreResponseList, error)
 }
 
 func (s *OrderServiceImpl) DownloadOrdersByMarket(downloadCtx context.Context, downloadFilter dto.DownloadOrdersByMarketFilterRequest) (dto.OrdersDownloadResponseList, error) {
@@ -73,4 +74,30 @@ func (s *OrderServiceImpl) GetBrandsByMarket(brandCtx context.Context, brandFilt
 	}
 
 	return dto.ConvertBrandResponses(brandResults), nil
+}
+
+func (s *OrderServiceImpl) GetStoresByMarket(storeCtx context.Context, storeFilter dto.GetStoresByMarketFilterRequest) (dto.OrdersStoreResponseList, error) {
+	var storeResults model.OrdersStoreList
+	var err error
+
+	switch storeFilter.Marketplace {
+	case shared.BLIBLI:
+		storeResults, err = s.OrderRepository.GetBlibliStores(storeCtx)
+	default:
+		return dto.OrdersStoreResponseList{}, nil
+	}
+
+	if err != nil {
+		if failure.GetCode(err) == http.StatusInternalServerError {
+			log.Error().
+				Err(err).
+				Msg("[GetStoresByMarket] Internal server error occurred")
+			err = failure.InternalError(shared.InternalErrorSystem)
+			return dto.OrdersStoreResponseList{}, err
+		}
+		log.Warn().
+			Msg("[GetStoresByMarket] Error occurred")
+		return dto.OrdersStoreResponseList{}, err
+	}
+	return dto.ConvertStoreResponses(storeResults), nil
 }
