@@ -37,11 +37,18 @@ const (
 	FROM 
 		blibli_orders
 	`
+	selectBlibliUniqueStore = `
+	SELECT DISTINCT
+		store
+	FROM
+		blibli_orders
+	`
 )
 
 type BlibliOrdersRepository interface {
 	DownloadBlibliOrders(downloadCtx context.Context, downloadFilter model.DownloadOrdersByMarketFilter) (model.OrdersDownloadList, error)
 	GetBlibliBrands(brandCtx context.Context) (model.OrdersBrandList, error)
+	GetBlibliStores(storeCtx context.Context) (model.OrdersStoreList, error)
 }
 
 func (r *OrderRepositoryMySQL) DownloadBlibliOrders(downloadCtx context.Context, downloadFilter model.DownloadOrdersByMarketFilter) (model.OrdersDownloadList, error) {
@@ -87,4 +94,19 @@ func (r *OrderRepositoryMySQL) GetBlibliBrands(brandCtx context.Context) (model.
 	}
 
 	return model.BlibliNewOrdersBrandList(blibliBrandList), nil
+}
+
+func (r *OrderRepositoryMySQL) GetBlibliStores(storeCtx context.Context) (model.OrdersStoreList, error) {
+	query := fmt.Sprintf(selectBlibliUniqueStore)
+
+	var blibliStoreList model.BlibliStoreList
+	err := r.DB.Read.Select(&blibliStoreList, query)
+	if err != nil {
+		log.Error().
+			Err(err).
+			Msg("[GetBlibliStores] Failed to get blibli stores")
+		err = failure.InternalError(err)
+		return model.OrdersStoreList{}, nil
+	}
+	return model.BlibliNewOrdersStoreList(blibliStoreList), nil
 }
